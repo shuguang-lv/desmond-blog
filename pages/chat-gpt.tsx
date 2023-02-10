@@ -76,29 +76,37 @@ export default function ChatGPT() {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             rows={4}
-            className="my-5 w-full rounded-md shadow-sm focus:border-black focus:ring-black dark:bg-neutral-900 dark:focus:border-white dark:focus:ring-white"
+            className="my-5 w-full rounded-md border-2 shadow-sm focus:border-black focus:ring-black dark:bg-neutral-900 dark:focus:border-white dark:focus:ring-white"
             placeholder={'e.g. How to be a programmer?'}
           />
-          <button
-            className="mt-4 rounded-xl bg-black px-8 py-2 font-medium text-white hover:bg-black/80 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
-            onClick={(e) => generate(e)}
-          >
-            {loading ? (
-              <LoadingDots color={theme === 'dark' ? 'black' : 'white'} style="large" />
-            ) : (
-              <>Generate your answer &rarr;</>
-            )}
-          </button>
+          <div className="flex items-center">
+            <button
+              className="mt-4 mr-8 rounded-xl bg-black px-8 py-2 font-medium text-white hover:bg-black/80 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+              onClick={(e) => generate(e)}
+            >
+              {loading ? (
+                <LoadingDots color={theme === 'dark' ? 'black' : 'white'} style="large" />
+              ) : (
+                <>Generate your answer</>
+              )}
+            </button>
+            <button
+              className="mt-4 rounded-xl border-2 border-gray-900 bg-transparent px-8 py-2 font-medium text-gray-900 hover:bg-gray-900 hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-gray-900"
+              onClick={() => setPrompt('')}
+            >
+              Clear your prompt
+            </button>
+          </div>
         </div>
 
         <ResizablePanel>
           <AnimatePresence mode="wait">
-            <motion.div className="mb-2 space-y-10">
+            <motion.div className="mb-8 space-y-10">
               {completion && (
                 <>
                   <div className="mx-auto flex max-w-xl flex-col items-center justify-center space-y-8">
                     <div
-                      className="cursor-copy rounded-xl border bg-white p-4 shadow-md transition hover:bg-gray-100 dark:bg-neutral-900 dark:hover:bg-gray-800"
+                      className="cursor-copy rounded-xl border-2 bg-white p-4 shadow-md transition hover:bg-gray-100 dark:bg-neutral-900 dark:hover:bg-gray-800"
                       onClick={() => {
                         navigator.clipboard.writeText(completion)
                         toast('Answer copied to clipboard', {
