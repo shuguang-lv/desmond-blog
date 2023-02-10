@@ -90,7 +90,7 @@ const handler = async (req: Request): Promise<Response> => {
   const payload = {
     model: 'text-davinci-003',
     prompt,
-    temperature: 0,
+    temperature: 0.2,
     max_tokens: 200,
     stream: true,
   }

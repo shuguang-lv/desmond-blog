@@ -75,9 +75,22 @@ export const Authors = defineDocumentType(() => ({
   computedFields,
 }))
 
+const Snippet = defineDocumentType(() => ({
+  name: 'Snippet',
+  filePathPattern: 'snippets/**/*.mdx',
+  contentType: 'mdx',
+  fields: {
+    title: { type: 'string', required: true },
+    date: { type: 'string', required: true },
+    description: { type: 'string', required: true },
+    logos: { type: 'list', of: { type: 'string' }, required: true },
+  },
+  computedFields,
+}))
+
 export default makeSource({
   contentDirPath: 'data',
-  documentTypes: [Blog, Authors],
+  documentTypes: [Blog, Authors, Snippet],
   mdx: {
     cwd: process.cwd(),
     remarkPlugins: [
