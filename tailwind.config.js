@@ -61,7 +61,7 @@ module.exports = {
         14: '3.5rem',
       },
       fontFamily: {
-        sans: ['Outfit', ...fontFamily.sans],
+        sans: ['Nunito', ...fontFamily.sans],
       },
       colors: {
         primary: colors.teal,
