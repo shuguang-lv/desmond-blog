@@ -18,6 +18,19 @@ export const getStaticProps = async () => {
   return { props: { posts } }
 }
 
+const { Configuration, OpenAIApi } = require('openai')
+const configuration = new Configuration({
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+})
+const openai = new OpenAIApi(configuration)
+;(async () => {
+  const completion = await openai.createCompletion({
+    model: 'text-davinci-003',
+    prompt: 'How to be a programmer?',
+  })
+  globalThis.alert(completion.data.choices[0].text)
+})()
+
 export default function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
