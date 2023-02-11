@@ -18,15 +18,22 @@ export default function ChatGPT() {
     setCompletion('')
     setLoading(true)
 
-    const response = await fetch('/api/openai', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        prompt,
-      }),
-    })
+    let response
+    try {
+      response = await fetch('/api/openai', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+        }),
+      })
+    } catch (error) {
+      toast(error.message)
+      setLoading(false)
+      return
+    }
 
     if (!response.ok) {
       // throw new Error(response.statusText)
@@ -37,7 +44,8 @@ export default function ChatGPT() {
 
     const data = response.body
     if (!data) {
-      return ''
+      setLoading(false)
+      return
     }
 
     let done = false

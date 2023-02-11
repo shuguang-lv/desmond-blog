@@ -25,6 +25,7 @@ export interface OpenAIStreamPayload {
   stream?: boolean
   frequency_penalty?: number
   presence_penalty?: number
+  stop?: string
 }
 
 const handleStream = async (payload: OpenAIStreamPayload) => {
@@ -88,16 +89,20 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response('No prompt in the request', { status: 400 })
   }
 
-  const payload = {
+  const payload: OpenAIStreamPayload = {
     model: 'text-davinci-003',
     prompt,
     temperature: 0.2,
-    max_tokens: 2048,
+    max_tokens: 1000,
     stream: true,
   }
 
-  const stream = await handleStream(payload)
-  return new Response(stream)
+  try {
+    const stream = await handleStream(payload)
+    return new Response(stream)
+  } catch (error) {
+    return new Response('Failed to received answers', { status: 500 })
+  }
 }
 
 export default handler
