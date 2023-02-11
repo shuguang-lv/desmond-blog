@@ -66,7 +66,7 @@ export default function ChatGPT() {
     <div className="divide-y divide-gray-200 dark:divide-gray-700">
       <Toaster position="top-center" reverseOrder={false} toastOptions={{ duration: 2000 }} />
 
-      <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+      <div className="space-y-2 py-6 md:space-y-5">
         <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
           ChatGPT
         </h1>
@@ -75,8 +75,8 @@ export default function ChatGPT() {
         </p>
       </div>
 
-      <main className="mt-10 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mt-0">
-        <div className="container flex w-full max-w-xl flex-col items-center py-12">
+      <main className="flex w-full flex-1 flex-col items-center justify-center px-4 text-center">
+        <div className="container flex w-full max-w-xl flex-col items-center py-8 md:py-16">
           <div className="flex items-center space-x-3">
             <p className="text-center text-lg font-medium">Make your prompt below</p>
           </div>
@@ -109,7 +109,7 @@ export default function ChatGPT() {
 
         <ResizablePanel>
           <AnimatePresence mode="wait">
-            <motion.div className="mb-8 space-y-10">
+            <motion.div className="my-2 space-y-10">
               {completion && (
                 <>
                   <div className="mx-auto flex max-w-xl flex-col items-center justify-center space-y-8">
