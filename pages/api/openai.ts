@@ -17,13 +17,14 @@ const openai = new OpenAIApi(configuration)
 export interface OpenAIStreamPayload {
   model: string
   prompt: string
+  suffix?: string
+  max_tokens?: number
   temperature?: number
   top_p?: number
+  n?: number
+  stream?: boolean
   frequency_penalty?: number
   presence_penalty?: number
-  max_tokens: number
-  stream: boolean
-  n?: number
 }
 
 const handleStream = async (payload: OpenAIStreamPayload) => {
@@ -91,7 +92,7 @@ const handler = async (req: Request): Promise<Response> => {
     model: 'text-davinci-003',
     prompt,
     temperature: 0.2,
-    max_tokens: 200,
+    max_tokens: 2048,
     stream: true,
   }
 

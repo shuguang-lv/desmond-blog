@@ -76,12 +76,12 @@ export default function ChatGPT() {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             rows={4}
-            className="my-5 w-full rounded-md border-2 shadow-sm focus:border-black focus:ring-black dark:bg-neutral-900 dark:focus:border-white dark:focus:ring-white"
+            className="my-5 w-full rounded-md border-2 shadow-sm focus:border-black focus:ring-black dark:bg-neutral-900 dark:focus:border-gray-100 dark:focus:ring-gray-100"
             placeholder={'e.g. How to be a programmer?'}
           />
           <div className="flex items-center">
             <button
-              className="mt-4 mr-8 rounded-xl bg-black px-8 py-2 font-medium text-white hover:bg-black/80 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+              className="mt-4 mr-8 rounded-xl bg-black px-8 py-2 font-medium text-gray-100 hover:bg-black/80 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
               onClick={(e) => generate(e)}
             >
               {loading ? (
@@ -91,7 +91,7 @@ export default function ChatGPT() {
               )}
             </button>
             <button
-              className="mt-4 rounded-xl border-2 border-gray-900 bg-transparent px-8 py-2 font-medium text-gray-900 hover:bg-gray-900 hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-gray-900"
+              className="mt-4 rounded-xl border-2 border-gray-900 bg-transparent px-8 py-2 font-medium text-gray-900 hover:bg-gray-900 hover:text-gray-100 dark:border-gray-100 dark:text-gray-100 dark:hover:bg-gray-100 dark:hover:text-gray-900"
               onClick={() => setPrompt('')}
             >
               Clear your prompt
@@ -106,7 +106,7 @@ export default function ChatGPT() {
                 <>
                   <div className="mx-auto flex max-w-xl flex-col items-center justify-center space-y-8">
                     <div
-                      className="cursor-copy rounded-xl border-2 bg-white p-4 shadow-md transition hover:bg-gray-100 dark:bg-neutral-900 dark:hover:bg-gray-800"
+                      className="cursor-copy rounded-xl border-2 bg-gray-100 p-4 shadow-md transition hover:bg-white dark:bg-neutral-900 dark:hover:bg-gray-800"
                       onClick={() => {
                         navigator.clipboard.writeText(completion)
                         toast('Answer copied to clipboard', {
