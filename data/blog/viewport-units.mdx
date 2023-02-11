@@ -6,14 +6,16 @@ tags: ['CSS']
 draft: false
 ---
 
+<TOCInline toc={props.toc} toHeading={2} />
+
 The viewport is the area of your browser where actual content is displayed - in other words your web browser without its toolbars and buttons. The units are **vw**, **vh**, **vmin** and **vmax**. They all represent a percentage of the browser (viewport) dimensions and scale accordingly on window resize.
 
 Lets say we have a viewport of 1000px (width) by 800px (height):
 
--   **vw** - Represents 1% of the viewport's width. In our case 50vw = 500px.
--   **vh** - A percentage of the window's height. 50vh = 400px.
--   **vmin** - A percentage of the minimum of the two. In our example 50vmin = 400px since we are in landscape mode.
--   **vmax** - A percentage of the bigger dimension. 50vmax = 500px.
+- **vw** - Represents 1% of the viewport's width. In our case 50vw = 500px.
+- **vh** - A percentage of the window's height. 50vh = 400px.
+- **vmin** - A percentage of the minimum of the two. In our example 50vmin = 400px since we are in landscape mode.
+- **vmax** - A percentage of the bigger dimension. 50vmax = 500px.
 
 You can use these units anywhere that you can specify a value in pixels, like in `width`, `height`, `margin`, `font-size` and more. They will be recalculated by the browser on window resize or device rotation.
 
@@ -63,7 +65,7 @@ If we use **vw** instead our child element will simply overflow it's parent and 
 
 #### Responsive font size
 
-Viewport units can be used on text too! In this example we've set the font size be in **vw** creating awesome text responsiveness in one line of CSS. Goodbye [Fittext](http://fittextjs.com/ "Fittext")!
+Viewport units can be used on text too! In this example we've set the font size be in **vw** creating awesome text responsiveness in one line of CSS. Goodbye [Fittext](http://fittextjs.com/ 'Fittext')!
 
 ```css
 h2.responsive-text {

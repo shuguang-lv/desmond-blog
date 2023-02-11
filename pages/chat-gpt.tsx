@@ -75,9 +75,9 @@ export default function ChatGPT() {
         </p>
       </div>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-4 text-center">
+      <main className="mt-10 flex w-full flex-1 flex-col items-center justify-center px-4 text-center sm:mt-0">
         <div className="container flex w-full max-w-xl flex-col items-center py-12">
-          <div className="mt-10 flex items-center space-x-3">
+          <div className="flex items-center space-x-3">
             <p className="text-center text-lg font-medium">Make your prompt below</p>
           </div>
           <textarea

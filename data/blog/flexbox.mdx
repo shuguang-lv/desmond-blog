@@ -6,11 +6,13 @@ tags: ['CSS']
 draft: false
 ---
 
+<TOCInline toc={props.toc} toHeading={2} />
+
 #### Creating Equal Height Columns
 
 This may not seem like a difficult task at first, but making columns that have the same height can be really annoying. Simply setting `min-height` won't work, because once the amount of content in the columns starts to differ, some of them will grow and others will remain shorter.
 
-Fixing this issue using flexbox couldn't be easier, as columns created this way have equal heights by default. All we have to do is initialize the flex model, then make sure the [flex-direction](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction "flex-direction") and [align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items "align-items") properties have their default values.
+Fixing this issue using flexbox couldn't be easier, as columns created this way have equal heights by default. All we have to do is initialize the flex model, then make sure the [flex-direction](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction 'flex-direction') and [align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items 'align-items') properties have their default values.
 
 ```html
 <div class="container">
@@ -33,11 +35,11 @@ Fixing this issue using flexbox couldn't be easier, as columns created this way 
 }
 ```
 
-To see a demo of this technique, you can head out to our [Easiest Way To Create Equal Height Sidebars](https://tutorialzine.com/2014/10/easiest-way-equal-height-sidebar/ "Easiest Way To Create Equal Height Sidebars") article, in which we create a responsive page with a sidebar and main content section.
+To see a demo of this technique, you can head out to our [Easiest Way To Create Equal Height Sidebars](https://tutorialzine.com/2014/10/easiest-way-equal-height-sidebar/ 'Easiest Way To Create Equal Height Sidebars') article, in which we create a responsive page with a sidebar and main content section.
 
 #### Creating Fully Responsive Grids
 
-A row in the flexbox grid is simply a container with `display:flex`. The horizontal columns inside it can be any amount of elements, setting the size of which is done via [flex](https://developer.mozilla.org/en-US/docs/Web/CSS/flex "flex"). The flex model adapts to the viewport size, so this setup should look fine on all devices. However, if we decide there isn't enough space horizontally on the screen, we can easily turn the layout into a vertical one with a media-query.
+A row in the flexbox grid is simply a container with `display:flex`. The horizontal columns inside it can be any amount of elements, setting the size of which is done via [flex](https://developer.mozilla.org/en-US/docs/Web/CSS/flex 'flex'). The flex model adapts to the viewport size, so this setup should look fine on all devices. However, if we decide there isn't enough space horizontally on the screen, we can easily turn the layout into a vertical one with a media-query.
 
 ```css
 .container {
@@ -62,7 +64,7 @@ A row in the flexbox grid is simply a container with `display:flex`. The horizon
 }
 ```
 
-You can check out a variation of this technique in our [The Easiest Way To Make Responsive Headers](https://tutorialzine.com/2016/02/quick-tip-easiest-way-to-make-responsive-headers/ "The Easiest Way To Make Responsive Headers") Quick Tip.
+You can check out a variation of this technique in our [The Easiest Way To Make Responsive Headers](https://tutorialzine.com/2016/02/quick-tip-easiest-way-to-make-responsive-headers/ 'The Easiest Way To Make Responsive Headers') Quick Tip.
 
 #### Creating The Perfect Sticky Footer
 
@@ -91,4 +93,4 @@ footer {
 }
 ```
 
-You can find more information about this technique in our article [The Best Way To Make Sticky Footers](https://tutorialzine.com/2016/03/quick-tip-the-best-way-to-make-sticky-footers/ "The Best Way To Make Sticky Footers").
+You can find more information about this technique in our article [The Best Way To Make Sticky Footers](https://tutorialzine.com/2016/03/quick-tip-the-best-way-to-make-sticky-footers/ 'The Best Way To Make Sticky Footers').

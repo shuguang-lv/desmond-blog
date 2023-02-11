@@ -6,12 +6,14 @@ tags: ['CSS']
 draft: false
 ---
 
+<TOCInline toc={props.toc} toHeading={2} />
+
 ## Introduction
 
-If you're working with frontend applications, eventually you'll need to style things. And even though the state-of-the-art of frontend applications keeps blazing ahead, CSS is still the only way to style anything on the web (and lately, in some cases, [native applications too](https://facebook.github.io/react-native/ "native applications too")). There's two broad categories of styling solutions out there, namely:
+If you're working with frontend applications, eventually you'll need to style things. And even though the state-of-the-art of frontend applications keeps blazing ahead, CSS is still the only way to style anything on the web (and lately, in some cases, [native applications too](https://facebook.github.io/react-native/ 'native applications too')). There's two broad categories of styling solutions out there, namely:
 
--   CSS preprocessors, which have been around for ages (such as [SASS](http://sass-lang.com/ "SASS"), [LESS](http://lesscss.org/ "LESS"), and others)
--   CSS-in-JS libraries, which are a relatively new approach to styling (such as [free-style](https://github.com/blakeembrey/free-style "free-style"), and [many others](https://github.com/MicheleBertoli/css-in-js "many others"))
+- CSS preprocessors, which have been around for ages (such as [SASS](http://sass-lang.com/ 'SASS'), [LESS](http://lesscss.org/ 'LESS'), and others)
+- CSS-in-JS libraries, which are a relatively new approach to styling (such as [free-style](https://github.com/blakeembrey/free-style 'free-style'), and [many others](https://github.com/MicheleBertoli/css-in-js 'many others'))
 
 The choice between the two approaches is a topic for a separate article, and as usual, both have their pros and cons. That said, I'll be focusing on the former approach, and if you've chosen to go with the latter, this article will probably be a bit less interesting.
 
@@ -19,10 +21,10 @@ The choice between the two approaches is a topic for a separate article, and as 
 
 So we're after a robust, scalable CSS architecture. But what properties does that call for, specifically?
 
--   **Component oriented** - The best way to deal with UI complexity is to split the UI into smaller components. If you're using a sensible framework, the JavaScript side of this will come naturally. [React](https://facebook.github.io/react/ "React"), for instance, encourages a high-level of componentization and compartmentalization. We want a CSS architecture to match.
--   **Sandboxed** - Splitting the UI into components won't help our cognitive load if touching the styles of one component can have unwanted and unpredictable effects on another. Fundamental CSS features such as the [cascade](https://developer.mozilla.org/en/docs/Web/Guide/CSS/Getting_started/Cascading_and_inheritance "cascade"), and a single, global namespace for identifiers actively work against you in this regard. If you're familiar with the [Web Components spec](https://developer.mozilla.org/en-US/docs/Web/Web_Components "Web Components spec"), think of this as getting the [style isolation benefits of the Shadow DOM](http://www.html5rocks.com/en/tutorials/webcomponents/shadowdom-201/ "style isolation benefits of the Shadow DOM") without having to care about browser support (or whether or not the spec ever gets serious traction).
--   **Convenient** - We want all the nice things, and we don't want to work for them. That is, we don't want to make our developer experience any worse by adopting this architecture. If possible, we want to make it better.
--   **Err on the side of safety** - Somewhat related to the previous point, we want everything to be *local by default*, and global only as an exception. We engineers are lazy people, and the path of least resistance always needs to point to the correct solution.
+- **Component oriented** - The best way to deal with UI complexity is to split the UI into smaller components. If you're using a sensible framework, the JavaScript side of this will come naturally. [React](https://facebook.github.io/react/ 'React'), for instance, encourages a high-level of componentization and compartmentalization. We want a CSS architecture to match.
+- **Sandboxed** - Splitting the UI into components won't help our cognitive load if touching the styles of one component can have unwanted and unpredictable effects on another. Fundamental CSS features such as the [cascade](https://developer.mozilla.org/en/docs/Web/Guide/CSS/Getting_started/Cascading_and_inheritance 'cascade'), and a single, global namespace for identifiers actively work against you in this regard. If you're familiar with the [Web Components spec](https://developer.mozilla.org/en-US/docs/Web/Web_Components 'Web Components spec'), think of this as getting the [style isolation benefits of the Shadow DOM](http://www.html5rocks.com/en/tutorials/webcomponents/shadowdom-201/ 'style isolation benefits of the Shadow DOM') without having to care about browser support (or whether or not the spec ever gets serious traction).
+- **Convenient** - We want all the nice things, and we don't want to work for them. That is, we don't want to make our developer experience any worse by adopting this architecture. If possible, we want to make it better.
+- **Err on the side of safety** - Somewhat related to the previous point, we want everything to be _local by default_, and global only as an exception. We engineers are lazy people, and the path of least resistance always needs to point to the correct solution.
 
 ## Concrete rules
 
@@ -30,9 +32,9 @@ So we're after a robust, scalable CSS architecture. But what properties does tha
 
 This is just to get the obvious out of the way.
 
-Do not target ID's (e.g. `#header`), because whenever you think there can be only one instance of something, [on an infinite timescale](https://twitter.com/stedwick/status/525777867146539009 "on an infinite timescale"), you'll be proven wrong. One past example of this was when we wanted to weed out any data-binding bugs on a large application we were working on. We started two instances of our UI code, side-by-side in the same DOM, both bound to a *shared* instance of our data model. This was to make sure that all changes in the data model were correctly reflected in both UI's. Any components that you might have assumed to always be unique, such as a header bar, no longer are. This is a great benchmark for surfacing other subtle bugs related to assumptions about uniqueness too, by the way. I digress, but the moral of the story is: there's no situation where targeting an ID would be a *better* idea than targeting a class, so let's just not, ever.
+Do not target ID's (e.g. `#header`), because whenever you think there can be only one instance of something, [on an infinite timescale](https://twitter.com/stedwick/status/525777867146539009 'on an infinite timescale'), you'll be proven wrong. One past example of this was when we wanted to weed out any data-binding bugs on a large application we were working on. We started two instances of our UI code, side-by-side in the same DOM, both bound to a _shared_ instance of our data model. This was to make sure that all changes in the data model were correctly reflected in both UI's. Any components that you might have assumed to always be unique, such as a header bar, no longer are. This is a great benchmark for surfacing other subtle bugs related to assumptions about uniqueness too, by the way. I digress, but the moral of the story is: there's no situation where targeting an ID would be a _better_ idea than targeting a class, so let's just not, ever.
 
-Neither should you target elements (e.g. `p`) directly. It's often OK to target elements that *belong to a component* (see below), but on their own, eventually you'll end up having to [undo those styles](http://csswizardry.com/2012/11/code-smells-in-css/ "undo those styles") for a component that doesn't want them. Recalling our high-level goals, this also goes against just about all of them (component-orientedness, avoiding the cascade like the plague, and being local by default). Setting things like fonts, line-heights and colors (a.k.a [inherited properties](https://developer.mozilla.org/en-US/docs/Web/CSS/inheritance "inherited properties")) on `body` *can* be the exception to this rule if you so choose, but if you're serious about component isolation, it's completely feasible to forgo even these (see below about [working with external styles](#8-integrate-external-styles-loosely "working with external styles")).
+Neither should you target elements (e.g. `p`) directly. It's often OK to target elements that _belong to a component_ (see below), but on their own, eventually you'll end up having to [undo those styles](http://csswizardry.com/2012/11/code-smells-in-css/ 'undo those styles') for a component that doesn't want them. Recalling our high-level goals, this also goes against just about all of them (component-orientedness, avoiding the cascade like the plague, and being local by default). Setting things like fonts, line-heights and colors (a.k.a [inherited properties](https://developer.mozilla.org/en-US/docs/Web/CSS/inheritance 'inherited properties')) on `body` _can_ be the exception to this rule if you so choose, but if you're serious about component isolation, it's completely feasible to forgo even these (see below about [working with external styles](#8-integrate-external-styles-loosely 'working with external styles')).
 
 So with very few exceptions, your styles should always target a class.
 
@@ -53,21 +55,21 @@ ui/
 |   └── Button.scss
 ```
 
-When you're working in the code, simply open your project browser, and all other aspects of the component are at your fingertips. There's a natural coupling between the styles and the JavaScript that produces your DOM, and it's a fair bet you'll be touching one soon after touching the other. The same applies to a component and its tests, for example. Think of this as the [locality of reference principle](https://en.wikipedia.org/wiki/Locality_of_reference "locality of reference principle") for UI components. I, too, used to meticulously maintain separate mirrors of my source tree under `styles/`, `tests/`, `docs/` etc, until I realized that literally the only reason I kept doing that was because that's how I'd always done it.
+When you're working in the code, simply open your project browser, and all other aspects of the component are at your fingertips. There's a natural coupling between the styles and the JavaScript that produces your DOM, and it's a fair bet you'll be touching one soon after touching the other. The same applies to a component and its tests, for example. Think of this as the [locality of reference principle](https://en.wikipedia.org/wiki/Locality_of_reference 'locality of reference principle') for UI components. I, too, used to meticulously maintain separate mirrors of my source tree under `styles/`, `tests/`, `docs/` etc, until I realized that literally the only reason I kept doing that was because that's how I'd always done it.
 
 ### 3. Use consistent class namespacing
 
-CSS has a single, flat namespace for class names and other identifiers (such as ID's, animation names, etc). Just like in the PHP days of old, the community has dealt with this by simply using longer, structured names, thus emulating namespaces ([BEM](http://getbem.com/ "BEM") is an example). We'll want to choose a namespacing convention, and stick with it.
+CSS has a single, flat namespace for class names and other identifiers (such as ID's, animation names, etc). Just like in the PHP days of old, the community has dealt with this by simply using longer, structured names, thus emulating namespaces ([BEM](http://getbem.com/ 'BEM') is an example). We'll want to choose a namespacing convention, and stick with it.
 
 For instance, let's say we use `myapp-Header-link` as a class name. Each of its 3 parts have a specific function:
 
--   `myapp` to first isolate our app from other apps possibly running on the same DOM
--   `Header` to isolate the component from other components in the app
--   `link` to reserve a local name (within the component's namespace) for our local styling purposes
+- `myapp` to first isolate our app from other apps possibly running on the same DOM
+- `Header` to isolate the component from other components in the app
+- `link` to reserve a local name (within the component's namespace) for our local styling purposes
 
 As a special case, the root element of the `Header` component can be simply marked with the `myapp-Header` class. For a very simple component, that might be all you need.
 
-Whatever namespacing convention we choose, we'll want to be consistent about it. In addition to each of the 3 parts having a specific *function*, they'll also have a specific *meaning*. Just by looking at a class, you'll know where it belongs. The namespacing will be the map by which we navigate the styles of our project.
+Whatever namespacing convention we choose, we'll want to be consistent about it. In addition to each of the 3 parts having a specific _function_, they'll also have a specific _meaning_. Just by looking at a class, you'll know where it belongs. The namespacing will be the map by which we navigate the styles of our project.
 
 From now on I'll assume the namespacing scheme of `app-Component-class`, which I've personally found to work really well, but you can of course also come up with your own.
 
@@ -93,7 +95,7 @@ So we've established our namespacing conventions, and now want to use them to sa
 
 A robust, yet still tremendously simple solution to this is to wrap the entire style file into a prefix block. Note how we only have to repeat the app and component names once:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Header {
   background: black;
   color: white;
@@ -108,7 +110,7 @@ A robust, yet still tremendously simple solution to this is to wrap the entire s
 }
 ```
 
-The above example is in SASS, but the `&` symbol — perhaps shockingly — works the same across all relevant CSS preprocessors ([SASS](http://sass-lang.com/ "SASS"), [PostCSS](https://github.com/postcss/postcss-nested "PostCSS"), [LESS](http://lesscss.org/ "LESS") and [Stylus](http://stylus-lang.com/ "Stylus")). For completeness, this is what the above SASS compiles to:
+The above example is in SASS, but the `&` symbol — perhaps shockingly — works the same across all relevant CSS preprocessors ([SASS](http://sass-lang.com/ 'SASS'), [PostCSS](https://github.com/postcss/postcss-nested 'PostCSS'), [LESS](http://lesscss.org/ 'LESS') and [Stylus](http://stylus-lang.com/ 'Stylus')). For completeness, this is what the above SASS compiles to:
 
 ```css
 .myapp-Header {
@@ -125,9 +127,9 @@ The above example is in SASS, but the `&` symbol — perhaps shockingly — work
 }
 ```
 
-All the usual patterns play well with this, e.g. having different styles for different component states (think [Modifier in BEM terms](http://getbem.com/naming/ "Modifier in BEM terms")):
+All the usual patterns play well with this, e.g. having different styles for different component states (think [Modifier in BEM terms](http://getbem.com/naming/ 'Modifier in BEM terms')):
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Header {
   &-signup {
     display: block;
@@ -153,7 +155,7 @@ Which compiles to:
 
 Even media queries work conveniently, as long as your preprocessor supports bubbling (SASS, LESS, PostCSS and Stylus all do):
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Header {
   &-signup {
     display: block;
@@ -185,7 +187,7 @@ The above pattern makes it very convenient to use long, unique class names witho
 
 This document is about styling conventions, but the styles don't exist in a vacuum: our JS side will need to produce the same namespaced class names, and convenience is mandatory there as well.
 
-As a shameless plug, I have created a very simple, 0-dependency JS library for exactly this, called [css-ns](https://github.com/jareware/css-ns "css-ns"). When combined at the framework level ([with e.g. React](https://github.com/jareware/css-ns#use-with-react "with e.g. React")), it allows you to **enforce** a specific namespace within a specific file:
+As a shameless plug, I have created a very simple, 0-dependency JS library for exactly this, called [css-ns](https://github.com/jareware/css-ns 'css-ns'). When combined at the framework level ([with e.g. React](https://github.com/jareware/css-ns#use-with-react 'with e.g. React')), it allows you to **enforce** a specific namespace within a specific file:
 
 ```javascript
 // Create a namespace-bound local copy of React:
@@ -207,7 +209,7 @@ Will render into the DOM as:
 </div>
 ```
 
-This is very convenient, and above all makes the JS side *local by default*.
+This is very convenient, and above all makes the JS side _local by default_.
 
 But again, I digress. Back to the CSS side of things.
 
@@ -217,7 +219,7 @@ Remember when I said prefixing each class name with the component namespace was 
 
 Consider the following styles:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Header {
   a {
     color: blue;
@@ -235,7 +237,7 @@ And the following component hierarchy:
 +-------------------------+
 ```
 
-We're cool, right? Only the `<a>` elements inside `Header` get [blued](https://www.youtube.com/watch?v=axHe_BVY_9c "blued"), because the rule we generate is:
+We're cool, right? Only the `<a>` elements inside `Header` get [blued](https://www.youtube.com/watch?v=axHe_BVY_9c 'blued'), because the rule we generate is:
 
 ```css
 .myapp-Header a {
@@ -260,11 +262,11 @@ The selector `.myapp-Header a` **also matches** the `<a>` element inside `LoginF
 This can be fixed in two ways:
 
 1.  Never target element names in stylesheets. If every `<a>` element in `Header` is `<a class="myapp-Header-link">` instead, we'll never have to deal with this issue. Then again, sometimes you have the perfectly semantic markup set up, with the `<article>`s and `<aside>`s and `<th>`s in all the right places, and you don't want to clutter them with extra classes. In that case:
-2.  Only target things outside your namespace with [the ](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors "the ")[>](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors ">")[ combinator](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors " combinator").
+2.  Only target things outside your namespace with [the ](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors 'the ')[>](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors '>')[ combinator](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors ' combinator').
 
 Adjusted for the latter approach, our styles can be rewritten as:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Header {
   > a {
     color: blue;
@@ -276,7 +278,7 @@ Which will ensure our isolation also works depth-wise in the component tree, as 
 
 If this sounds controversial, let me further bring up your blood pressure by claiming that this is also fine:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Header {
   > nav > p > a {
     color: blue;
@@ -286,54 +288,54 @@ If this sounds controversial, let me further bring up your blood pressure by cla
 
 We've been trained to avoid selector nesting (including this stronger form with `>`) like the plague, by [many years' worth of credible advice](http://lmgtfy.com/?q=css+nesting+harmful "many years' worth of credible advice"). But why? The cited reasons boil down to these three:
 
-1.  Cascading styles will ruin your day, eventually. The more you nest selectors, the higher the chances of accidentally finding an element which matches the selectors of *more than one component*. If you've read this far, you know we've already eliminated this possibility (with strict namespace prefixing, and using strong child selectors where needed).
-2.  Too much specificity will reduce reusability. The styles written for `nav p a` won't be reusable anywhere else except in that very specific environment. But we specifically *never want this anyway*, in fact, we go out of our way to forbid this method of reusability, as it doesn't play well with our goal of components being isolated from each other.
+1.  Cascading styles will ruin your day, eventually. The more you nest selectors, the higher the chances of accidentally finding an element which matches the selectors of _more than one component_. If you've read this far, you know we've already eliminated this possibility (with strict namespace prefixing, and using strong child selectors where needed).
+2.  Too much specificity will reduce reusability. The styles written for `nav p a` won't be reusable anywhere else except in that very specific environment. But we specifically _never want this anyway_, in fact, we go out of our way to forbid this method of reusability, as it doesn't play well with our goal of components being isolated from each other.
 3.  Too much specificity will make refactorings harder. This has some basis in reality, in that if you only had `.myapp-Header-link a`, you could freely move the `<a>` around in your component's HTML, and the same styles will always apply. Whereas with `> nav > p > a` you will need to update the selector to match the link's new location within the component's HTML. But given how we want to assemble our UI from small, well-isolated components, this argument is also rather moot. Sure, if you had to consider the HTML & CSS of your entire application when doing a refactoring, this might be scary. But you're operating in a small sandbox which has some tens of lines of styles, and knowing that nothing outside that sandbox needs to be considered, these types of changes become a non-issue.
 
 This is a good example of understanding the rules, so you know when to break them. In our architecture, selector nesting is not only OK, it's sometimes the right thing to do. Go crazy with it.
 
-### An aside for the curious: Prevent leaking styles *into* the component
+### An aside for the curious: Prevent leaking styles _into_ the component
 
 So have we achieved perfect sandboxing of our styles, so that each component can live in total isolation from the rest of the page? As a quick recap:
 
--   We've prevented leaks **out of our components** by prefixing each class name with the component namespace:
-    ```纯文本
-      +-------+
-      |       |
-      |    -----X--->
-      |       |
-      +-------+
-    ```
--   By extension, this means we've prevented leaks **between our components**:
-    ```纯文本
-      +-------+     +-------+
-      |       |     |       |
-      |    ------X------>   |
-      |       |     |       |
-      +-------+     +-------+
-    ```
--   And we've prevented leaks **into child components** by minding our child selectors:
-    ```纯文本
-      +---------------------+
-      |           +-------+ |
-      |           |       | |
-      |    ----X------>   | |
-      |           |       | |
-      |           +-------+ |
-      +---------------------+
-    ```
--   But crucially, **external styles can still leak into components**:
-    ```纯文本
-            +-------+
-            |       |
-      ---------->   |
-            |       |
-            +-------+
-    ```
+- We've prevented leaks **out of our components** by prefixing each class name with the component namespace:
+  ```纯文本
+    +-------+
+    |       |
+    |    -----X--->
+    |       |
+    +-------+
+  ```
+- By extension, this means we've prevented leaks **between our components**:
+  ```纯文本
+    +-------+     +-------+
+    |       |     |       |
+    |    ------X------>   |
+    |       |     |       |
+    +-------+     +-------+
+  ```
+- And we've prevented leaks **into child components** by minding our child selectors:
+  ```纯文本
+    +---------------------+
+    |           +-------+ |
+    |           |       | |
+    |    ----X------>   | |
+    |           |       | |
+    |           +-------+ |
+    +---------------------+
+  ```
+- But crucially, **external styles can still leak into components**:
+  ```纯文本
+          +-------+
+          |       |
+    ---------->   |
+          |       |
+          +-------+
+  ```
 
 For example, say we have styled our component with:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Header {
   > a {
     color: blue;
@@ -353,12 +355,12 @@ a {
 
 Luckily, you often have some control over the dependencies you use, and can simply look for a more well-behaved alternative.
 
-Also, I said there's no *simple* way to protect your components from this. That doesn't mean there aren't ways. [There are ways, dude](https://www.youtube.com/watch?v=20wUS_bbOHY "There are ways, dude"), they just come with various trade-offs:
+Also, I said there's no _simple_ way to protect your components from this. That doesn't mean there aren't ways. [There are ways, dude](https://www.youtube.com/watch?v=20wUS_bbOHY 'There are ways, dude'), they just come with various trade-offs:
 
--   Just brute-forcing it: if you include a [CSS reset](http://cssreset.com/what-is-a-css-reset/ "CSS reset") *for every element of every component*, and attach it to a selector that always wins over the 3rd party ones, you're golden. But unless your application is tiny (say, a "Share" button 3rd parties can embed onto their sites), this approach quickly spirals out of control. This is rarely a good idea, it's just listed here for completeness.
--   [all: initial](https://developer.mozilla.org/en/docs/Web/CSS/all "all: initial") is a less-known new CSS property designed for exactly this. It can [stop inherited properties from flowing in](https://jsfiddle.net/0d9htatc/ "stop inherited properties from flowing in"), and also work as a local reset, [as long as it wins the specificity war](https://jsfiddle.net/e7rw4L8L/ "as long as it wins the specificity war") (and as long as you repeat it for each element you want to protect). Its implementation includes [some intricacies](https://speakerdeck.com/csswizardry/refactoring-css-without-losing-your-mind?slide=39 "some intricacies") and [isn't yet supported](http://caniuse.com/#feat=css-all "isn't yet supported") everywhere, but `all: initial` might eventually become a useful tool for style isolation.
--   Shadow DOM has already been mentioned, and it's exactly the tool you would want for this job, as it allows declaring clear component boundaries for both JS and CSS. Despite [some recent glimmers of hope](https://developer.apple.com/library/content/releasenotes/General/WhatsNewInSafari/Articles/Safari_10_0.html "some recent glimmers of hope"), the Web Components spec hasn't made great progress in recent years, and unless you're working with a known set of browsers you can't really count on the Shadow DOM.
--   Finally, there's the `<iframe>`. It offers the strongest form of isolation the web runtime can offer (both for JS and CSS), but also carries steep penalties in startup cost (latency) and maintenance cost (retained memory). Still, oftentimes the trade-off is worth it, and most prominent web embeds (Facebook, Twitter, Disqus, etc) are in fact implemented with iframes. For the purposes of this document however — isolating hundreds or thousands of small components from each other — this approach would blow our performance budget a 100 times over.
+- Just brute-forcing it: if you include a [CSS reset](http://cssreset.com/what-is-a-css-reset/ 'CSS reset') _for every element of every component_, and attach it to a selector that always wins over the 3rd party ones, you're golden. But unless your application is tiny (say, a "Share" button 3rd parties can embed onto their sites), this approach quickly spirals out of control. This is rarely a good idea, it's just listed here for completeness.
+- [all: initial](https://developer.mozilla.org/en/docs/Web/CSS/all 'all: initial') is a less-known new CSS property designed for exactly this. It can [stop inherited properties from flowing in](https://jsfiddle.net/0d9htatc/ 'stop inherited properties from flowing in'), and also work as a local reset, [as long as it wins the specificity war](https://jsfiddle.net/e7rw4L8L/ 'as long as it wins the specificity war') (and as long as you repeat it for each element you want to protect). Its implementation includes [some intricacies](https://speakerdeck.com/csswizardry/refactoring-css-without-losing-your-mind?slide=39 'some intricacies') and [isn't yet supported](http://caniuse.com/#feat=css-all "isn't yet supported") everywhere, but `all: initial` might eventually become a useful tool for style isolation.
+- Shadow DOM has already been mentioned, and it's exactly the tool you would want for this job, as it allows declaring clear component boundaries for both JS and CSS. Despite [some recent glimmers of hope](https://developer.apple.com/library/content/releasenotes/General/WhatsNewInSafari/Articles/Safari_10_0.html 'some recent glimmers of hope'), the Web Components spec hasn't made great progress in recent years, and unless you're working with a known set of browsers you can't really count on the Shadow DOM.
+- Finally, there's the `<iframe>`. It offers the strongest form of isolation the web runtime can offer (both for JS and CSS), but also carries steep penalties in startup cost (latency) and maintenance cost (retained memory). Still, oftentimes the trade-off is worth it, and most prominent web embeds (Facebook, Twitter, Disqus, etc) are in fact implemented with iframes. For the purposes of this document however — isolating hundreds or thousands of small components from each other — this approach would blow our performance budget a 100 times over.
 
 Anyway, this aside is running long, back to our list of CSS rules.
 
@@ -382,7 +384,7 @@ We immediately see that styling `.myapp-Header .myapp-Button` would be a bad ide
 
 Note how the `LoginForm` is docked to the right edge of the `Header`. Intuitively, one might style this as:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-LoginForm {
   float: right;
 }
@@ -392,7 +394,7 @@ We haven't violated any of our rules, but we've also made the `LoginForm` a lot 
 
 The pragmatic solution to this is to (partially) relax our previous rule of only applying styles to the namespace the current file belongs to. Specifically, we want to do this instead:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Header {
   > .myapp-LoginForm {
     float: right;
@@ -402,7 +404,7 @@ The pragmatic solution to this is to (partially) relax our previous rule of only
 
 This is in fact perfectly OK, as long as we don't allow breaching the child's sandbox arbitrarily:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 // COUNTER-EXAMPLE; DON'T DO THIS
 .myapp-Header {
   > .myapp-LoginForm {
@@ -414,13 +416,13 @@ This is in fact perfectly OK, as long as we don't allow breaching the child's sa
 
 We don't want to allow this, because we'd lose our safety net of local changes never having global repercussions. With the above code, `LoginForm.scss` is no longer the only place you need to check when modifying the appearance of the `LoginForm` component. Making changes gets scary again. So where do we draw the line between what's OK and what's a no-no?
 
-We want to respect the sandbox *inside* each child component, as we don't want to rely on its implementation details. It's a black box to us. What's *outside* the child component, conversely, is the sandbox of the parent, where it reigns supreme. The distinction between inside and outside emerges quite naturally from one of the most fundamental concepts in CSS: [the box model](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model "the box model").
+We want to respect the sandbox _inside_ each child component, as we don't want to rely on its implementation details. It's a black box to us. What's _outside_ the child component, conversely, is the sandbox of the parent, where it reigns supreme. The distinction between inside and outside emerges quite naturally from one of the most fundamental concepts in CSS: [the box model](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model 'the box model').
 
-My analogies are terrible, but here goes: just like *being inside a country* means being within its physical borders, we establish that a parent can effect styles on its (direct) children only outside the border of the component. That means properties related to positioning and dimensions (e.g. `position`, `margin`, `display`, `width`, `float`, `z-index` etc) are OK, while properties that reach inside the border (e.g. `border` itself, `padding`, `color`, `font` etc) are a no-no.
+My analogies are terrible, but here goes: just like _being inside a country_ means being within its physical borders, we establish that a parent can effect styles on its (direct) children only outside the border of the component. That means properties related to positioning and dimensions (e.g. `position`, `margin`, `display`, `width`, `float`, `z-index` etc) are OK, while properties that reach inside the border (e.g. `border` itself, `padding`, `color`, `font` etc) are a no-no.
 
 As a corollary, this is also very obviously forbidden:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 // COUNTER-EXAMPLE; DON'T DO THIS
 .myapp-Header {
   > .myapp-LoginForm {
@@ -434,20 +436,20 @@ As a corollary, this is also very obviously forbidden:
 
 There are a few interesting/boring edge cases, such as:
 
--   `box-shadow` - A specific type of shadow can be an integral part of the look-and-feel of a component, and thus it should contain those styles itself. Then again, the visual effect is clearly rendered outside the border, so it's going into its parent component's territory.
--   `color`, `font` and other [inherited properties](https://developer.mozilla.org/en-US/docs/Web/CSS/inheritance "inherited properties") - `.myapp-Header > .myapp-LoginForm { color: red }` reaches into the insides of the child component, but on the other hand can be functionally equivalent to `.myapp-Header { color: red; }`, which is OK by our other rules.
--   `display` - If the child component uses a [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/ "Flexbox") layout, it's possibly relying on having `display: flex` set on its root element. However, the parent might choose to hide its child by setting `display: none` on it.
+- `box-shadow` - A specific type of shadow can be an integral part of the look-and-feel of a component, and thus it should contain those styles itself. Then again, the visual effect is clearly rendered outside the border, so it's going into its parent component's territory.
+- `color`, `font` and other [inherited properties](https://developer.mozilla.org/en-US/docs/Web/CSS/inheritance 'inherited properties') - `.myapp-Header > .myapp-LoginForm { color: red }` reaches into the insides of the child component, but on the other hand can be functionally equivalent to `.myapp-Header { color: red; }`, which is OK by our other rules.
+- `display` - If the child component uses a [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/ 'Flexbox') layout, it's possibly relying on having `display: flex` set on its root element. However, the parent might choose to hide its child by setting `display: none` on it.
 
-The important thing to realize is that in these edge cases, you're not risking thermonuclear war, just introducing a tiny bit of the CSS cascade back into your styles. As with other things that are bad for you, enjoying the cascade *in moderation* is fine. For instance, taking a closer look at the last example, the [specificity contest](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity "specificity contest") works out exactly like you'd want it to: when the component is visible, `.myapp-LoginForm { display: flex }` is the most specific rule, and takes precedence. When the owner decides to hide it with `.myapp-Header-loginBoxHidden > .myapp-LoginBox { display: none }` that rule is more specific, and wins.
+The important thing to realize is that in these edge cases, you're not risking thermonuclear war, just introducing a tiny bit of the CSS cascade back into your styles. As with other things that are bad for you, enjoying the cascade _in moderation_ is fine. For instance, taking a closer look at the last example, the [specificity contest](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity 'specificity contest') works out exactly like you'd want it to: when the component is visible, `.myapp-LoginForm { display: flex }` is the most specific rule, and takes precedence. When the owner decides to hide it with `.myapp-Header-loginBoxHidden > .myapp-LoginBox { display: none }` that rule is more specific, and wins.
 
 ### 8. Integrate external styles loosely
 
 To avoid repetitive work, you sometimes need to share styles between components. To avoid work altogether, you sometimes want to use styles created by others. Both of these should be achieved without creating any unnecessary coupling into the codebase.
 
-As a concrete example, let's consider using some styles from [Bootstrap](http://getbootstrap.com/css/ "Bootstrap"), as it's a perfect example of an annoying framework to work with. Considering everything we've talked about above, with regard to sharing a single global namespace for styles, and collisions being bad, Bootstrap:
+As a concrete example, let's consider using some styles from [Bootstrap](http://getbootstrap.com/css/ 'Bootstrap'), as it's a perfect example of an annoying framework to work with. Considering everything we've talked about above, with regard to sharing a single global namespace for styles, and collisions being bad, Bootstrap:
 
--   Exports a ton of selectors (as of version 3.3.7, 2481 to be precise) to that namespace, whether you actually use them or not. (Fun aside: IE's up to version 9 can only process 4095 selectors before silently ignoring the rest. I've heard of people spending *days* debugging this wondering what the hell's going on.)
--   Uses hard-coded class names such as `.btn` and `.table`. Can't imagine those ever being accidentally reused by some other developer or project. :sarcasm:
+- Exports a ton of selectors (as of version 3.3.7, 2481 to be precise) to that namespace, whether you actually use them or not. (Fun aside: IE's up to version 9 can only process 4095 selectors before silently ignoring the rest. I've heard of people spending _days_ debugging this wondering what the hell's going on.)
+- Uses hard-coded class names such as `.btn` and `.table`. Can't imagine those ever being accidentally reused by some other developer or project. :sarcasm:
 
 Regardless, let's say we want to use Bootstrap as a basis for our `Button` component.
 
@@ -457,13 +459,13 @@ Instead of integrating on the HTML side with:
 <button class="myapp-Button btn"></button>
 ```
 
-Consider [extending](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#extend "extending") the class in your styles:
+Consider [extending](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#extend 'extending') the class in your styles:
 
 ```html
 <button class="myapp-Button"></button>
 ```
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Button {
   @extend .btn; // from Bootstrap
 }
@@ -473,29 +475,29 @@ This has the benefit of not giving anyone (including yourself) any ideas about r
 
 The same principle applies to your own helper classes, and there you'll have the option of using more sensible class names:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Button {
   @extend .myapp-utils-button; // defined elsewhere in your project
 }
 ```
 
-Or [forgoing emitting the class](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#placeholder_selectors_ "forgoing emitting the class") altogether ([supported by most preprocessors](https://csspre.com/placeholder-selectors/ "supported by most preprocessors")):
+Or [forgoing emitting the class](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#placeholder_selectors_ 'forgoing emitting the class') altogether ([supported by most preprocessors](https://csspre.com/placeholder-selectors/ 'supported by most preprocessors')):
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Button {
   @extend %myapp-utils-button; // defined elsewhere in your project
 }
 ```
 
-Finally, all CSS preprocessors support the concept of [mixins](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins "mixins"), which are a tremendously powerful tool:
+Finally, all CSS preprocessors support the concept of [mixins](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins 'mixins'), which are a tremendously powerful tool:
 
-```sass&#x20;(scss)&#x20;
+```sass (scss)
 .myapp-Button {
   @include myapp-generateCoolButton($padding: 15px, $withExplosions: true);
 }
 ```
 
-It should be noted that when dealing with more civilized style frameworks (such as [Bourbon](http://bourbon.io/ "Bourbon") or [Foundation](http://foundation.zurb.com/ "Foundation")), they'll in fact be doing just this: declaring a bunch of mixins for you to use where they're needed, and not emitting any styles on their own. [Neat](http://neat.bourbon.io/ "Neat").
+It should be noted that when dealing with more civilized style frameworks (such as [Bourbon](http://bourbon.io/ 'Bourbon') or [Foundation](http://foundation.zurb.com/ 'Foundation')), they'll in fact be doing just this: declaring a bunch of mixins for you to use where they're needed, and not emitting any styles on their own. [Neat](http://neat.bourbon.io/ 'Neat').
 
 ## In closing
 
@@ -510,4 +512,3 @@ Finally, as mentioned before, when you understand the rules you've laid out (or 
 That added value might be — for instance — that your test framework can then be more clever in automatically figuring out what things act as buttons, and can be clicked on.
 
 Or you might decide that it's OK to break component isolation when the breach is tiny, and the additional work from splitting components would be too great. While I'll want to remind you that it's a slippery slope and that consistency is king et cetera, as long as your team is in agreement, and you get stuff done, you're doing the right thing.
-

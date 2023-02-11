@@ -6,6 +6,8 @@ tags: ['CSS']
 draft: false
 ---
 
+<TOCInline toc={props.toc} toHeading={2} />
+
 #### Defining And Using CSS Variables
 
 Variables follow the same scope and inheritance rules like any other CSS definition. The easiest way to use them, is to make them globally available, by adding the declarations to the `:root` pseudo-class, so that all other selectors can inherit it.
@@ -98,12 +100,12 @@ The example below demonstrates how easy it is to dynamically manipulate properti
 
 As you can see CSS variables are pretty straightforward to use and it won't take much time for developers to start applying them everywhere. Here are a few more things we left our of the article, but are still worth mentioning:
 
--   The var() function has a second parameter, which can be used to supply a fallback value if the custom property fails:
-    ```css
-    width: var(--custom-width, 20%);
-    ```
--   It is possible to nest custom properties:
-    ```css
-    --base-color: #f93ce9;
-    --background-gradient: linear-gradient(to top, var(--base-color), #444);
-    ```
+- The var() function has a second parameter, which can be used to supply a fallback value if the custom property fails:
+  ```css
+  width: var(--custom-width, 20%);
+  ```
+- It is possible to nest custom properties:
+  ```css
+  --base-color: #f93ce9;
+  --background-gradient: linear-gradient(to top, var(--base-color), #444);
+  ```
