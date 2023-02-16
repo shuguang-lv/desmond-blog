@@ -117,7 +117,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<Respo
     })
     console.log('debuged')
     res.status(200).end(data)
-    // return new Response(stream)
+    return new Response()
   } catch (error) {
     return new Response('Failed to received answers', { status: 500 })
   }
