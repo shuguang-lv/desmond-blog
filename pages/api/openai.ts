@@ -128,7 +128,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // })
     await api.sendMessage(payload.prompt, {
       onProgress: (partialResponse) => {
-        res.status(200).write(encoder.encode(partialResponse.text))
+        res.write(encoder.encode(partialResponse.text))
       },
       timeoutMs: 2 * 60 * 1000,
     })
