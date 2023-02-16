@@ -35,6 +35,8 @@ export default function ChatGPT() {
       return
     }
 
+    console.log('2435345345345')
+
     if (!response.ok) {
       // throw new Error(response.statusText)
       toast(response.statusText)
