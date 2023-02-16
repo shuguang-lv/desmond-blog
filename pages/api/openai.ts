@@ -19,19 +19,19 @@ const api = new ChatGPTAPI({
 // })
 // const openai = new OpenAIApi(configuration)
 
-export interface OpenAIStreamPayload {
-  model: string
-  prompt: string
-  suffix?: string
-  max_tokens?: number
-  temperature?: number
-  top_p?: number
-  n?: number
-  stream?: boolean
-  frequency_penalty?: number
-  presence_penalty?: number
-  stop?: string
-}
+// export interface OpenAIStreamPayload {
+//   model: string
+//   prompt: string
+//   suffix?: string
+//   max_tokens?: number
+//   temperature?: number
+//   top_p?: number
+//   n?: number
+//   stream?: boolean
+//   frequency_penalty?: number
+//   presence_penalty?: number
+//   stop?: string
+// }
 
 // const handleStream = async (payload: OpenAIStreamPayload) => {
 //   const encoder = new TextEncoder()
