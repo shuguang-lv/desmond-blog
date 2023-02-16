@@ -126,13 +126,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     //     controller.close()
     //   },
     // })
-    await api.sendMessage(payload.prompt, {
-      onProgress: (partialResponse) => {
-        res.write(encoder.encode(partialResponse.text))
-      },
-      timeoutMs: 2 * 60 * 1000,
-    })
-    res.status(200).end()
+    api
+      .sendMessage(payload.prompt, {
+        onProgress: (partialResponse) => {
+          res.write(encoder.encode(partialResponse.text))
+        },
+        timeoutMs: 2 * 60 * 1000,
+      })
+      .then(() => res.end())
+    res.status(200)
     // return new Response(readable)
     // res.status(200).json(readable)
   } catch (error) {
