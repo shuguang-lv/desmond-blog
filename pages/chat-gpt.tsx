@@ -56,7 +56,8 @@ export default function ChatGPT() {
       const { value, done: doneReading } = await reader.read()
       done = doneReading
       const chunkValue = decoder.decode(value)
-      setCompletion((prev) => prev + chunkValue)
+      // setCompletion((prev) => prev + chunkValue)
+      setCompletion((prev) => chunkValue)
     }
 
     setLoading(false)
