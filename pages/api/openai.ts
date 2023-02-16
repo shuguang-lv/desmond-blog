@@ -105,17 +105,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<Respo
   // }
 
   try {
-    console.log('debug')
+    console.log('debug start')
     // const stream = await handleStream(payload)
     const data = await api.sendMessage(prompt, {
       // print the partial response as the AI is "typing"
       onProgress: (partialResponse) => {
-        console.log('debuging')
+        console.log(partialResponse.text)
         res.status(200).write(partialResponse.text)
       },
       timeoutMs: 2 * 60 * 1000,
     })
-    console.log('debuged')
+    console.log('debug end')
     res.status(200).end(data)
     return new Response()
   } catch (error) {
