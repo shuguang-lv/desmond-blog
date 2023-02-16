@@ -106,18 +106,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<Respo
 
   try {
     console.log('debug start')
-    // const stream = await handleStream(payload)
-    const data = await api.sendMessage(prompt, {
-      // print the partial response as the AI is "typing"
-      onProgress: (partialResponse) => {
-        console.log(partialResponse.text)
-        res.status(200).write(partialResponse.text)
-      },
-      timeoutMs: 2 * 60 * 1000,
+    res.status(200).json({
+      body: req.body,
+      query: req.query,
+      cookies: req.cookies,
     })
-    console.log('debug end')
-    res.status(200).end(data)
-    return new Response()
+    // const stream = await handleStream(payload)
+    // const data = await api.sendMessage(prompt, {
+    //   // print the partial response as the AI is "typing"
+    //   onProgress: (partialResponse) => {
+    //     console.log(partialResponse.text)
+    //     res.status(200).write(partialResponse.text)
+    //   },
+    //   timeoutMs: 2 * 60 * 1000,
+    // })
+    // console.log('debug end')
+    // res.status(200).end(data)
+    // return new Response()
   } catch (error) {
     return new Response('Failed to received answers', { status: 500 })
   }
