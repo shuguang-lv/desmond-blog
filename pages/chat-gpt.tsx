@@ -58,7 +58,7 @@ export default function ChatGPT() {
         break
       }
       const chunkValue = decoder.decode(value)
-      setCompletion((prev) => chunkValue)
+      setCompletion((prev) => prev + chunkValue)
     }
 
     setLoading(false)
