@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { AnimatePresence, motion } from 'framer-motion'
@@ -42,21 +43,21 @@ export default function ChatGPT() {
       return
     }
 
-    const data = response.body
+    const data: ReadableStream = response.body
     if (!data) {
       setLoading(false)
       return
     }
 
-    let done = false
     const reader = data.getReader()
     const decoder = new TextDecoder()
 
-    while (!done) {
-      const { value, done: doneReading } = await reader.read()
-      done = doneReading
+    while (true) {
+      const { value, done } = await reader.read()
+      if (done) {
+        break
+      }
       const chunkValue = decoder.decode(value)
-      // setCompletion((prev) => prev + chunkValue)
       setCompletion((prev) => chunkValue)
     }
 
