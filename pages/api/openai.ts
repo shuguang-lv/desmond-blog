@@ -106,11 +106,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<Respo
 
   try {
     console.log('debug start')
-    res.status(200).json({
-      body: req.body,
-      query: req.query,
-      cookies: req.cookies,
-    })
+    return new Response('ddd')
     // const stream = await handleStream(payload)
     // const data = await api.sendMessage(prompt, {
     //   // print the partial response as the AI is "typing"
