@@ -65,16 +65,16 @@ export default function ChatGPT() {
   }
 
   return (
-    <div className="divide-y divide-gray-200 dark:divide-gray-700">
+    <div className="flex flex-col">
       <Toaster position="top-center" reverseOrder={false} toastOptions={{ duration: 2000 }} />
 
-      <div className="space-y-2 py-6 md:space-y-5">
-        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+      <div className="space-y-2 md:space-y-5">
+        <div className="divider"></div>
+        <h1 className="md:leading-14 text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl">
           ChatGPT
         </h1>
-        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-          Generate your answer in seconds
-        </p>
+        <p className="text-lg leading-7">Generate your answer in seconds</p>
+        <div className="divider"></div>
       </div>
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-4 text-center">
@@ -86,24 +86,17 @@ export default function ChatGPT() {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             rows={4}
-            className="my-5 w-full rounded-md border-2 shadow-sm focus:border-black focus:ring-black dark:bg-neutral-900 dark:focus:border-gray-100 dark:focus:ring-gray-100"
+            className="textarea-bordered textarea my-5 w-full border-2 shadow-md"
             placeholder={'e.g. How to be a programmer?'}
           />
-          <div className="flex items-center">
+          <div className="mt-4 flex items-center">
             <button
-              className="mt-4 mr-8 rounded-xl bg-black px-8 py-2 font-medium text-gray-100 hover:bg-black/80 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
+              className={`btn mr-8 border-2 ${loading && 'loading'}`}
               onClick={(e) => generate(e)}
             >
-              {loading ? (
-                <LoadingDots color={theme === 'dark' ? 'black' : 'white'} style="large" />
-              ) : (
-                <>Generate your answer</>
-              )}
+              Generate your answer
             </button>
-            <button
-              className="mt-4 rounded-xl border-2 border-gray-900 bg-transparent px-8 py-2 font-medium text-gray-900 hover:bg-gray-900 hover:text-gray-100 dark:border-gray-100 dark:text-gray-100 dark:hover:bg-gray-100 dark:hover:text-gray-900"
-              onClick={() => setPrompt('')}
-            >
+            <button className="btn-outline btn border-2" onClick={() => setPrompt('')}>
               Clear your prompt
             </button>
           </div>
@@ -115,8 +108,8 @@ export default function ChatGPT() {
               {completion && (
                 <>
                   <div className="mx-auto flex max-w-xl flex-col items-center justify-center space-y-8">
-                    <div
-                      className="cursor-copy rounded-xl border-2 bg-gray-100 p-4 shadow-md transition hover:bg-white dark:bg-neutral-900 dark:hover:bg-gray-800"
+                    <kbd
+                      className="kbd cursor-copy p-4 shadow-md transition"
                       onClick={() => {
                         navigator.clipboard.writeText(completion)
                         toast('Answer copied to clipboard', {
@@ -125,8 +118,9 @@ export default function ChatGPT() {
                       }}
                       key={completion}
                     >
+                      {' '}
                       <p>{completion}</p>
-                    </div>
+                    </kbd>
                   </div>
                 </>
               )}

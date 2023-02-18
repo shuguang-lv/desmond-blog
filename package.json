@@ -19,6 +19,7 @@
     "autoprefixer": "^10.4.13",
     "chatgpt": "^4.4.1",
     "contentlayer": "0.3.0",
+    "daisyui": "^2.50.1",
     "esbuild": "0.17.5",
     "eventsource-parser": "^0.1.0",
     "framer-motion": "^9.0.2",
