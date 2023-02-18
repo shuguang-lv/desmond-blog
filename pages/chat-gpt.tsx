@@ -21,13 +21,13 @@ export default function ChatGPT() {
 
     let response
     try {
-      response = await fetch('/api/openai', {
+      response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/openai', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt,
+          message: prompt,
         }),
       })
     } catch (error) {
@@ -58,7 +58,7 @@ export default function ChatGPT() {
         break
       }
       const chunkValue = decoder.decode(value)
-      setCompletion((prev) => prev + chunkValue)
+      setCompletion((prev) => chunkValue)
     }
 
     setLoading(false)

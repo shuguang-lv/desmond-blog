@@ -47,6 +47,7 @@
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
     "tailwindcss": "^3.2.2",
+    "umi-request": "^1.4.0",
     "unfetch": "^5.0.0",
     "unist-util-visit": "^4.1.0"
   },
