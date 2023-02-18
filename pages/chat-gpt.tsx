@@ -131,29 +131,31 @@ export default function ChatGPT() {
       </div>
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-4 text-center">
-        <div className="alert my-8 hidden w-4/5 shadow-lg md:block">
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="h-6 w-6 flex-shrink-0 stroke-info"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-            <span>
-              You can talk to ChatGPT like talking to a real human. Just type your question in the
-              text input at the bottom, hit <code className="text-info">Enter</code> and go!
-            </span>
+        {messages.length === 0 && (
+          <div className="alert my-8 w-11/12 shadow-lg">
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="h-6 w-6 flex-shrink-0 stroke-info"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+              <span>
+                You can talk to ChatGPT like talking to a real human. Just type your question in the
+                text input at the bottom, hit <code className="text-info">Enter</code> and go!
+              </span>
+            </div>
           </div>
-        </div>
+        )}
 
-        <div className="flex w-full flex-col px-2">
+        <div className="my-4 flex w-full flex-col px-2">
           {messages.map((message, idx) => (
             <ResizablePanel key={idx}>
               <AnimatePresence mode="wait">
