@@ -86,9 +86,9 @@ export default function ChatGPT() {
             className="textarea-bordered textarea my-5 w-full border-2 shadow-md"
             placeholder={'e.g. How to be a programmer?'}
           />
-          <div className="mt-4 flex items-center">
+          <div className="mt-4 flex flex-col items-center justify-center md:flex-row">
             <button
-              className={`btn mr-8 border-2 ${loading && 'loading'}`}
+              className={`btn mb-4 border-2 md:mb-0 md:mr-8 ${loading && 'loading'}`}
               onClick={(e) => generate(e)}
             >
               Generate your answer
