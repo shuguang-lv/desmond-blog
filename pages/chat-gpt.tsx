@@ -188,7 +188,7 @@ export default function ChatGPT() {
                         }}
                       >
                         {loading && !completion && idx === messages.length - 1 ? (
-                          <LoadingDots />
+                          <LoadingDots color="#000" />
                         ) : (
                           message.content
                         )}
