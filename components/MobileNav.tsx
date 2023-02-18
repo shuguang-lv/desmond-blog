@@ -35,7 +35,7 @@ const MobileNav = () => {
         </svg>
       </button>
       <div
-        className={`fixed top-0 left-0 z-10 h-full w-full transform bg-neutral-content bg-opacity-95 duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 z-10 h-full w-full transform bg-neutral-content bg-opacity-90 duration-300 ease-in-out ${
           navShow ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -50,7 +50,7 @@ const MobileNav = () => {
               viewBox="0 0 20 20"
               fill="currentColor"
               className={`${
-                theme === 'dark' || resolvedTheme === 'dark' ? 'text-accent-content' : ''
+                theme === 'dark' || resolvedTheme === 'dark' ? 'text-secondary-content' : ''
               }`}
             >
               <path
@@ -63,7 +63,7 @@ const MobileNav = () => {
         </div>
         <nav
           className={`fixed mt-8 h-full ${
-            theme === 'dark' || resolvedTheme === 'dark' ? 'text-accent-content' : ''
+            theme === 'dark' || resolvedTheme === 'dark' ? 'text-secondary-content' : ''
           }`}
         >
           {headerNavLinks.map((link) => (
