@@ -4,15 +4,12 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
-import { useTheme } from 'next-themes'
-import LoadingDots from '@/components/LoadingDots'
 import ResizablePanel from '@/components/ResizablePanel'
 
 export default function ChatGPT() {
   const [loading, setLoading] = useState(false)
   const [prompt, setPrompt] = useState('')
   const [completion, setCompletion] = useState('')
-  const { theme } = useTheme()
 
   const generate = async (e: any) => {
     e.preventDefault()
