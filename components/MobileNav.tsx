@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import Link from './Link'
 import headerNavLinks from '@/data/headerNavLinks'
+import { useTheme } from 'next-themes'
 
 const MobileNav = () => {
   const [navShow, setNavShow] = useState(false)
+  const { theme, resolvedTheme } = useTheme()
 
   const onToggleNav = () => {
     setNavShow((status) => {
@@ -33,13 +35,13 @@ const MobileNav = () => {
         </svg>
       </button>
       <div
-        className={`fixed top-0 left-0 z-10 h-full w-full transform bg-neutral-content opacity-95 duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 z-10 h-full w-full transform bg-neutral-content bg-opacity-95 duration-300 ease-in-out ${
           navShow ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="flex justify-end">
           <button
-            className="mr-5 mt-11 h-8 w-8 rounded text-secondary-content"
+            className="mr-5 mt-11 h-8 w-8 rounded"
             aria-label="Toggle Menu"
             onClick={onToggleNav}
           >
@@ -47,7 +49,9 @@ const MobileNav = () => {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className=""
+              className={`${
+                theme === 'dark' || resolvedTheme === 'dark' ? 'text-accent-content' : ''
+              }`}
             >
               <path
                 fillRule="evenodd"
@@ -57,12 +61,16 @@ const MobileNav = () => {
             </svg>
           </button>
         </div>
-        <nav className="fixed mt-8 h-full">
+        <nav
+          className={`fixed mt-8 h-full ${
+            theme === 'dark' || resolvedTheme === 'dark' ? 'text-accent-content' : ''
+          }`}
+        >
           {headerNavLinks.map((link) => (
             <div key={link.title} className="px-12 py-4">
               <Link
                 href={link.href}
-                className="link-hover link text-2xl font-bold tracking-widest text-secondary-content"
+                className={`link-hover link text-2xl font-bold tracking-widest`}
                 onClick={onToggleNav}
               >
                 {link.title}

@@ -65,6 +65,10 @@ module.exports = () => {
     eslint: {
       dirs: ['pages', 'components', 'lib', 'layouts', 'scripts', 'constant', 'utils'],
     },
+    compiler: {
+      // Enables the styled-components SWC transform
+      styledComponents: true,
+    },
     async headers() {
       return [
         {
