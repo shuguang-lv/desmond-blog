@@ -77,6 +77,18 @@ module.exports = () => {
         },
       ]
     },
+    images: {
+      dangerouslyAllowSVG: true,
+      contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'api.dicebear.com',
+          port: '',
+          pathname: '/5.x/**',
+        },
+      ],
+    },
     webpack: (config, options) => {
       config.module.rules.push({
         test: /\.(png|jpe?g|gif|mp4)$/i,

@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 import ResizablePanel from '@/components/ResizablePanel'
 import LoadingDots from '@/components/LoadingDots'
+import Image from 'next/image'
 
 export interface ChatResponse {
   text: string
@@ -13,11 +14,16 @@ export interface ChatResponse {
   conversationId: string
 }
 
+export interface ChatMessage {
+  type: 'ai' | 'human'
+  content: string
+}
+
 export default function ChatGPT() {
   const [loading, setLoading] = useState(false)
   const [prompt, setPrompt] = useState('')
   const [completion, setCompletion] = useState('')
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([] as Array<ChatMessage>)
   const [parentMessageId, setParentMessageId] = useState('')
   const [conversationId, setConversationId] = useState('')
   const pageEndRef = useRef(null)
@@ -119,6 +125,7 @@ export default function ChatGPT() {
         rows={4}
         className="textarea-bordered textarea fixed bottom-5 z-50 m-5 w-10/12 border-2 text-lg shadow-xl md:w-1/2"
         placeholder={'Make your prompt here\ne.g. How to be a programmer?'}
+        disabled={loading}
       />
 
       <div className="space-y-2 md:space-y-5">
@@ -157,14 +164,19 @@ export default function ChatGPT() {
 
         <div className="my-4 flex w-full flex-col px-2">
           {messages.map((message, idx) => (
-            <ResizablePanel key={idx}>
+            <ResizablePanel key={idx + message.content}>
               <AnimatePresence mode="wait">
                 <motion.div>
                   {message.type === 'human' ? (
                     <div className="chat chat-end w-full self-end">
                       <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
-                          <img src="https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=you" />
+                          <Image
+                            alt="You"
+                            src="https://api.dicebear.com/5.x/adventurer-neutral/svg?seed=you"
+                            width={100}
+                            height={100}
+                          />
                         </div>
                       </div>
                       <div className="chat-header">You</div>
@@ -176,7 +188,12 @@ export default function ChatGPT() {
                     <div className="chat chat-start w-full self-start">
                       <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
-                          <img src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=Aneka&backgroundColor=b6e3f4" />
+                          <Image
+                            alt="ChatGPT"
+                            src="https://api.dicebear.com/5.x/bottts-neutral/svg?seed=Aneka&backgroundColor=b6e3f4"
+                            width={100}
+                            height={100}
+                          />
                         </div>
                       </div>
                       <div className="chat-header">ChatGPT</div>
