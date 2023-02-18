@@ -123,7 +123,7 @@ export default function ChatGPT() {
           }
         }}
         rows={4}
-        className="textarea-bordered textarea fixed bottom-5 z-50 m-5 w-10/12 border-2 text-lg shadow-xl md:w-1/2"
+        className="textarea-bordered textarea fixed bottom-5 left-1/2 z-50 my-5 w-10/12 -translate-x-1/2 border-2 text-lg shadow-xl md:w-1/2"
         placeholder={'Make your prompt here\ne.g. How to be a programmer?'}
         disabled={loading}
       />

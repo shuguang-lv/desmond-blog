@@ -2,6 +2,8 @@ import '@fontsource/nunito-sans'
 import '@/css/tailwind.css'
 import '@/css/prism.css'
 import 'katex/dist/katex.css'
+// core styles shared by all of react-notion-x (required)
+import 'react-notion-x/src/styles.css'
 // import '@/css/docsearch.css' // Uncomment if using algolia docsearch
 // import '@docsearch/css' // Uncomment if using algolia docsearch
 

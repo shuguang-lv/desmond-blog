@@ -4,8 +4,10 @@ import Logo from '@/data/logo.svg'
 import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
+import { useRouter } from 'next/router'
 
 const Header = () => {
+  const router = useRouter()
   return (
     <header className="flex items-center justify-between py-10">
       <div>
@@ -25,9 +27,15 @@ const Header = () => {
         </Link>
       </div>
       <div className="flex items-center text-base leading-5">
-        <div className="hidden sm:block">
+        <div className="tabs hidden pb-4 sm:block">
           {headerNavLinks.map((link) => (
-            <Link key={link.title} href={link.href} className="p-1 font-medium  sm:p-4">
+            <Link
+              key={link.title}
+              href={link.href}
+              className={`tab tab-lg ${
+                router.pathname === link.href ? 'tab-active' : ''
+              } p-1 font-medium sm:p-4`}
+            >
               {link.title}
             </Link>
           ))}

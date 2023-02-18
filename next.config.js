@@ -52,6 +52,7 @@ const securityHeaders = [
     key: 'Permissions-Policy',
     value: 'camera=(), microphone=(), geolocation=()',
   },
+  { key: 'Access-Control-Allow-Origin', value: '*' },
 ]
 
 /**
@@ -78,6 +79,13 @@ module.exports = () => {
       ]
     },
     images: {
+      domains: [
+        'www.notion.so',
+        'notion.so',
+        'images.unsplash.com',
+        's3.us-west-2.amazonaws.com',
+        'api.dicebear.com',
+      ],
       dangerouslyAllowSVG: true,
       contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
       remotePatterns: [
