@@ -55,7 +55,7 @@ export default function Page({ recordMap }: { recordMap: ExtendedRecordMap }) {
   return (
     <NotionPage
       recordMap={recordMap}
-      rootPageId={process.env.NEXT_PUBLIC_DATABASE_ID}
+      rootPageId={process.env.NEXT_PUBLIC_NOTION_PAGE_ID}
       previewImagesEnabled
     />
   )

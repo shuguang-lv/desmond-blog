@@ -5,7 +5,7 @@ import { NotionPage } from '@/layouts/NotionLayout'
 import { request } from '@/lib/fetch'
 
 export const getStaticProps = async () => {
-  const pageId = process.env.NEXT_PUBLIC_DATABASE_ID
+  const pageId = process.env.NEXT_PUBLIC_NOTION_PAGE_ID
   const recordMap = await request.get('/notion', {
     params: { page_id: pageId },
   })

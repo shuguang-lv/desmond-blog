@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { Client } from '@notionhq/client'
 
-if (!process.env.NEXT_PUBLIC_NOTION_SECRET || !process.env.NEXT_PUBLIC_DATABASE_ID) {
+if (!process.env.NEXT_PUBLIC_NOTION_SECRET || !process.env.NEXT_PUBLIC_NOTION_PAGE_ID) {
   throw new Error('Missing Notion api key')
 }
 
@@ -15,7 +15,7 @@ const handler = async (): Promise<Response> => {
       auth: process.env.NEXT_PUBLIC_NOTION_SECRET,
     })
     const res = await notion.databases.query({
-      database_id: process.env.NEXT_PUBLIC_DATABASE_ID,
+      database_id: process.env.NEXT_PUBLIC_NOTION_PAGE_ID,
     })
     return NextResponse.json(res)
   } catch (error) {
