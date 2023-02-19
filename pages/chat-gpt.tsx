@@ -123,7 +123,7 @@ export default function ChatGPT() {
           }
         }}
         rows={4}
-        className="textarea-bordered textarea fixed bottom-5 left-1/2 z-50 my-5 w-10/12 -translate-x-1/2 border-2 text-lg shadow-xl md:w-1/2"
+        className="textarea-bordered textarea fixed bottom-1 left-1/2 z-50 my-5 w-11/12 -translate-x-1/2 border-2 text-lg shadow-xl md:w-1/2"
         placeholder={'Make your prompt here\ne.g. How to be a programmer?'}
         disabled={loading}
       />
@@ -168,7 +168,7 @@ export default function ChatGPT() {
               <AnimatePresence mode="wait">
                 <motion.div>
                   {message.type === 'human' ? (
-                    <div className="chat chat-end w-full self-end">
+                    <div className="chat chat-end mb-4 w-full self-end">
                       <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
                           <Image
@@ -185,7 +185,7 @@ export default function ChatGPT() {
                       </div>
                     </div>
                   ) : (
-                    <div className="chat chat-start w-full self-start">
+                    <div className="chat chat-start mb-4 w-full self-start">
                       <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
                           <Image
