@@ -53,17 +53,19 @@ export default function ChatGPT() {
 
     let response
     try {
-      response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/openai', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: prompt,
-          conversationId,
-          parentMessageId,
-        }),
-      })
+      response = await fetch(
+        process.env.NEXT_PUBLIC_SERVER_URL +
+          '/openai?' +
+          `message=${prompt}&` +
+          `conversation_id=${conversationId}&` +
+          `parent_message_id=${parentMessageId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
     } catch (error) {
       toast(error.message)
       setLoading(false)

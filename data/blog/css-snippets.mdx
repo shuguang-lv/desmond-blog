@@ -1,0 +1,310 @@
+---
+title: 'CSS Snippets'
+date: '2023-02-19'
+lastmod: '2023-02-19'
+tags: ['CSS']
+draft: false
+---
+
+<TOCInline toc={props.toc} toHeading={2} />
+
+# Custom checkbox
+
+Creates a styled checkbox with animation on state change.
+
+- Use an `<svg>` element to create the check `<symbol>` and insert it via the `<use>` element to create a reusable SVG icon.
+- Create a `.checkbox-container` and use flexbox to create the appropriate layout for the checkboxes.
+- Hide the `<input>` element and use the `label` associated with it to display a checkbox and the provided text.
+- Use `stroke-dashoffset` to animate the check symbol on state change.
+- Use `transform: scale(0.9)` via a CSS animation to create a zoom animation effect.
+
+# List with floating section headings
+
+Creates a list with floating headings for each section.
+
+- Use `overflow-y: auto` to allow the list container to overflow vertically.
+- Use `display: grid` on the inner container (`<dl>`) to create a layout with two columns.
+- Set headings (`<dt>`) to `grid-column: 1` and content (`<dd>`) to `grid-column: 2`.
+- Finally, apply `position: sticky` and `top: 0.5rem` to headings to create a floating effect.
+
+# Menu on image hover
+
+Displays a menu overlay when the user hovers over the image.
+
+- Use a `<figure>` to wrap the `<img>` element and a `<div>` element that will contain the menu links.
+- Use the `opacity` and `right` attributes to animate the image on hover, creating a sliding effect.
+- Set the `left` attribute of the `<div>` to the negative of the element's `width`. Reset it to `0` when hovering over the parent element to slide in the menu.
+- Use `display: flex`, `flex-direction: column` and `justify-content: center` on the `<div>` to vertically center the menu items.
+
+# Image overlay on hover
+
+Displays an image overlay effect on hover.
+
+- Use the `:before` and `:after` pseudo-elements for the top and bottom bars of the overlay respectively. Set their `opacity`, `transform` and `transition` to produce the desired effect.
+- Use the `<figcaption>` for the text of the overlay. Set `display: flex`, `flex-direction: column` and `justify-content: center` to center the text into the image.
+- Use the `:hover` pseudo-selector to update the `opacity` and `transform` of all the elements and display the overlay.
+
+# Mouse cursor gradient tracking
+
+A hover effect where the gradient follows the mouse cursor.
+
+- Declare two CSS variables, `--x` and `--y`, used to track the position of the mouse on the button.
+- Declare a CSS variable, `--size`, used to modify the gradient's dimensions.
+- Use `background: radial-gradient(circle closest-side, pink, transparent)` to create the gradient at the correct position.
+- Use `Document.querySelector()` and `EventTarget.addEventListener()` to register a handler for the `'mousemove'` event.
+- Use `Element.getBoundingClientRect()` and `CSSStyleDeclaration.setProperty()` to update the values of the `--x` and `--y` CSS variables.
+
+# Perspective transform on hover
+
+Applies a perspective transform with a hover animation to an element.
+
+- Use `transform` with the `perspective()` and `rotateY()` functions to create a perspective for the element.
+- Use a `transition` to update the `transform` attribute's value on hover.
+- Change the `rotateY()` value to negative to mirror the perspective effect from left to right.
+
+# Horizontal scroll snap
+
+Creates a horizontally scrollable container that will snap on elements when scrolling.
+
+- Use `display: grid` and `grid-auto-flow: column` to create a horizontal layout.
+- Use `scroll-snap-type: x mandatory` and `overscroll-behavior-x: contain` to create a snap effect on horizontal scroll.
+- Change `scroll-snap-align` to either `start`, `stop` or `center` to change the snap alignment.
+
+# Vertical scroll snap
+
+Creates a scrollable container that will snap on elements when scrolling.
+
+- Use `display: grid` and `grid-auto-flow: row` to create a vertical layout.
+- Use `scroll-snap-type: y mandatory` and `overscroll-behavior-y: contain` to create a snap effect on vertical scroll.
+- You can use `scroll-snap-align` with either `start`, `stop` or `center` to change the snap alignment.
+
+# Show additional content on hover
+
+Creates a card that displays additional content on hover.
+
+- Use `overflow: hidden` on the card to hide elements that overflow vertically.
+- Use the `:hover` and `:focus-within` pseudo-class selectors to change the card's styling if the element is hovered, focused or any of its descendants are focused.
+- Set `transition: 0.3s ease all` to create a transition effect on hover/focus.
+
+# Responsive image mosaic
+
+Creates a responsive image mosaic.
+
+- Use `display: grid` to create an appropriate responsive grid layout.
+- Use `grid-row: span 2 / auto` and `grid-column: span 2 / auto` to create items that span two rows or two columns respectively.
+- Wrap the previous styles into a media query to avoid applying on small screen sizes.
+
+# Navigation list item hover and focus effect
+
+Creates a custom hover and focus effect for navigation items, using CSS transformations.
+
+- Use the `:before` pseudo-element at the list item anchor to create a hover effect. Hide it using `transform: scale(0)`.
+- Use the `:hover` and `:focus` pseudo-class selectors to transition the pseudo-element to `transform: scale(1)` and show its colored background.
+- Prevent the pseudo-element from covering the anchor element by using `z-index`.
+
+# Staggered animation
+
+Creates a staggered animation for the elements of a list.
+
+- Set `opacity: 0` and `transform: translateX(100%)` to make list elements transparent and move them all the way to the right.
+- Specify the same `transition` properties for list elements, except `transition-delay`.
+- Use inline styles to specify a value for `--i` for each list element. This will in turn be used for `transition-delay` to create the stagger effect.
+- Use the `:checked` pseudo-class selector for the checkbox to style list elements. Set `opacity` to `1` and `transform` to `translateX(0)` to make them appear and slide into view.
+
+# Typewriter effect
+
+Creates a typewriter effect animation.
+
+- Define two animations, `typing` to animate the characters and `blink` to animate the caret.
+- Use the `:after` pseudo-element to add the caret to the container element.
+- Use JavaScript to set the text for the inner element and set the `--characters` variable containing the character count. This variable is used to animate the text.
+- Use `white-space: nowrap` and `overflow: hidden` to make content invisible as necessary.
+
+# List with sticky section headings
+
+Creates a list with sticky headings for each section.
+
+- Use `overflow-y: auto` to allow the list container (`<dl>`) to overflow vertically.
+- Set headings (`<dt>`) `position` to `sticky` and apply `top: 0` to stick to the top of the container.
+
+# Bouncing loader
+
+Creates a bouncing loader animation.
+
+- Use `@keyframes` to define a bouncing animation, using the `opacity` and `transform` properties. Use a single axis translation on `transform: translate3d()` to achieve better animation performance.
+- Create a parent container, `.bouncing-loader`, for the bouncing circles. Use `display: flex` and `justify-content: center` to position them in the center.
+- Give the three bouncing circle `<div>` elements the same `width` and `height` and `border-radius: 50%` to make them circular.
+- Apply the `bouncing-loader` animation to each of the three bouncing circles.
+- Use a different `animation-delay` for each circle and `animation-direction: alternate` to create the appropriate effect.
+
+# Height transition
+
+Transitions an element's height from `0` to `auto` when its height is unknown.
+
+- Use `transition` to specify that changes to `max-height` should be transitioned over.
+- Use `overflow: hidden` to prevent the contents of the hidden element from overflowing its container.
+- Use `max-height` to specify an initial height of `0`.
+- Use the `:hover` pseudo-class to change the `max-height` to the value of the `--max-height` variable set by JavaScript.
+- Use `Element.scrollHeight` and `CSSStyleDeclaration.setProperty()` to set the value of `--max-height` to the current height of the element.
+- **Note:** Causes reflow on each animation frame, which will be laggy if there are a large number of elements beneath the element that is transitioning in height.
+
+# Image rotate on hover
+
+Creates a rotate effect for the image on hover.
+
+- Use the `scale()`, `rotate()` and `transition` properties when hovering over the parent element (a `<figure>`) to animate the image.
+- Use `overflow: hidden` on the parent element to hide the excess from the image transformation.
+
+# Rotating Card
+
+Creates a two sided card which rotates on hover.
+
+- Set the `backface-visibility` of the cards to none.
+- Initially, set `rotateY()` for the back side of the card to `-180deg` and the front side to `0deg`.
+- Upon hover, set `rotateY()` for the front side to `180deg` and backside to `0deg`.
+- Set the appropriate `perspective` value to create the rotate effect.
+
+# Isometric card
+
+Creates an isometric card.
+
+- Use `transform` with `rotateX()` and `rotateY()` as well as a `box-shadow` to create an isometric card.
+- Use `transition` to animate the card, creating a lift effect when the user hovers over it.
+
+# Scroll progress bar
+
+Creates a progress bar indicating the scroll percentage of the page.
+
+- Use `position: fixed` and a large `z-index` value to place the element at the top of the page and above any content.
+- Use `EventTarget.addEventListener()` and `Element.scrollTop` to determine the scroll percentage of the document and apply it to the `width` of the element.
+
+# Hamburger Button
+
+Displays a hamburger menu which transitions to a cross button on hover.
+
+- Use a `.hamburger-menu` container `div` which contains the top, bottom, and middle bars.
+- Set the container to `display: flex` with `flex-flow: column wrap`.
+- Add distance between the bars using `justify-content: space-between`.
+- Use `transform: rotate()` to rotate the top and bottom bars by 45 degrees and `opacity: 0` to fade the middle bar on hover.
+- Use `transform-origin: left` so that the bars rotate around the left point.
+
+# Masonry Layout
+
+Creates a masonry-style layout that is especially useful when working with images.
+
+- Create a masonry-style layout that consists of "bricks" that fall into each other with either a fixed `width` (vertical layout) or a fixed `height` (horizontal layout), forming a perfect fit. Especially useful when working with images.
+- Define `.masonry-container` This is the container for the masonry layout and `.masonry-columns`, an inner container in which `.masonry-brick` elements will be placed.
+- Apply `display: block` to `.masonry-brick` elements to allow the layout to flow properly.
+- Use the `:first-child` pseudo-element selector to apply a different `margin` for the first element to account for its positioning.
+- Use CSS variables and media queries for greater flexibility and responsiveness.
+
+# Button border animation
+
+Creates a border animation on hover.
+
+- Use the `:before` and `:after` pseudo-elements to create two boxes `24px` wide opposite each other above and below the box.
+- Use the `:hover` pseudo-class to extend the `width` of those elements to `100%` on hover and animate the change using `transition`.
+
+# Button swing animation
+
+Creates a swing animation on focus.
+
+- Use an appropriate `transition` to animate changes to the element.
+- Use the `:focus` pseudo-class to apply an `animation` that uses `transform` to make the element swing.
+- Use `animation-iteration-count` to only play the animation once.
+
+# Hover underline animation
+
+Creates an animated underline effect when the user hovers over the text.
+
+- Use `display: inline-block` to make the underline span just the width of the text content.
+- Use the `:after` pseudo-element with `width: 100%` and `position: absolute` to place it below the content.
+- Use `transform: scaleX(0)` to initially hide the pseudo-element.
+- Use the `:hover` pseudo-class selector to apply `transform: scaleX(1)` and display the pseudo-element on hover.
+- Animate `transform` using `transform-origin: left` and an appropriate `transition`.
+- Remove the `transform-origin` property to make the transform originate from the center of the element.
+
+# Overflow scroll gradient
+
+Adds a fading gradient to an overflowing element to better indicate there is more content to be scrolled.
+
+- Use the `:after` pseudo-element to create a `linear-gradient()` that fades from `transparent` to `white` (top to bottom).
+- Use `position: absolute`, `width` and `height` to place and size the pseudo-element in its parent.
+- Use `pointer-events: none` to exclude the pseudo-element from mouse events, allowing text behind it to still be selectable/interactive.
+
+# Pulse loader
+
+Creates a pulse effect loader animation using the `animation-delay` property.
+
+- Use `@keyframes` to define an animation at two points in the cycle. At the start (`0%`), the two `<div>` elements have no `width` or `height` and are positioned at the center. At the end (`100%`), both `<div>` elements have increased `width` and `height`, but their `position` is reset to `0`.
+- Use `opacity` to transition from `1` to `0` when animating to give the `<div>` elements a disappearing effect as they expand.
+- Set a predefined `width` and `height` for the parent container, `.ripple-loader` and use `position: relative` to position its children.
+- Use `animation-delay` on the second `<div>` element, so that each element starts its animation at a different time.
+
+# Truncate multiline text
+
+Truncates text that is longer than one line.
+
+- Use `overflow: hidden` to prevent the text from overflowing its dimensions.
+- Set a fixed `width` to ensure the element has at least one constant dimension.
+- Set `height: 109.2px` as calculated from the `font-size`, using the formula `font-size * line-height * numberOfLines` (in this case `26 * 1.4 * 3 = 109.2`).
+- Set `height: 36.4px` as calculated for the gradient container, based on the formula `font-size * line-height` (in this case `26 * 1.4 = 36.4`).
+- Use `background` with `linear-gradient()` to create a gradient from `transparent` to the `background-color`.
+
+# Dynamic shadow
+
+Creates a shadow similar to `box-shadow` but based on the colors of the element itself.
+
+- Use the `:after` pseudo-element with `position: absolute` and `width` and `height` equal to `100%` to fill the available space in the parent element.
+- Use `background: inherit` to inherit the `background` of the parent element.
+- Use `top` to slightly offset the pseudo-element, `filter: blur()` to create a shadow and `opacity` to make it semi-transparent.
+- Use `z-index: 1` on the parent and `z-index: -1` on the pseudo-element to position it behind its parent.
+
+# Toggle switch
+
+Creates a toggle switch with CSS only.
+
+- Use the `for` attribute to associate the `<label>` with the checkbox `<input>` element.
+- Use the `:after` pseudo-element of the `<label>` to create a circular knob for the switch.
+- Use the `:checked` pseudo-class selector to change the position of the knob, using `transform: translateX(20px)` and the `background-color` of the switch.
+- Use `position: absolute` and `left: -9999px` to visually hide the `<input>` element.
+
+# Custom scrollbar
+
+Customizes the scrollbar style for elements with scrollable overflow.
+
+- Use `::-webkit-scrollbar` to style the scrollbar element.
+- Use `::-webkit-scrollbar-track` to style the scrollbar track (the background of the scrollbar).
+- Use `::-webkit-scrollbar-thumb` to style the scrollbar thumb (the draggable element).
+- **Note:** Scrollbar styling doesn't appear to be on any standards track. This technique only works on WebKit-based browsers.
+
+# Border with top triangle
+
+Creates a content container with a triangle at the top.
+
+- Use the `:before` and `:after` pseudo-elements to create two triangles.
+- The colors of the two triangles should be the same as the container's `border-color` and the container's `background-color` respectively.
+- The `border-width` of the one triangle (`:before`) should be `1px` wider than the other one (`:after`), in order to act as the border.
+- The smaller triangle (`:after`) should be `1px` to the right of the larger triangle (`:before`) to allow for its left border to be shown.
+
+# Donut spinner
+
+Creates a donut spinner that can be used to indicate the loading of content.
+
+- Use a semi-transparent `border` for the whole element. Exclude one side that will serve as the loading indicator for the donut.
+- Define and use an appropriate animation, using `transform: rotate()` to rotate the element.
+
+# Drop cap
+
+Makes the first letter of the first paragraph bigger than the rest of the text.
+
+- Use the `:first-child` selector to select only the first paragraph.
+- Use the `::first-letter` pseudo-element to style the first element of the paragraph.
+
+# Gradient text
+
+Gives text a gradient color.
+
+- Use `background` with a `linear-gradient()` value to give the text element a gradient background.
+- Use `webkit-text-fill-color: transparent` to fill the text with a transparent color.
+- Use `webkit-background-clip: text` to clip the background with the text, filling the text with the gradient background as the color.
