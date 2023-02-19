@@ -29,7 +29,7 @@ export default function ChatGPT() {
   const pageEndRef = useRef(null)
 
   const scrollToBottom = () => {
-    pageEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    pageEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
   }
 
   useEffect(() => {
@@ -137,7 +137,7 @@ export default function ChatGPT() {
         <div className="divider"></div>
       </div>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-4 text-center">
+      <main className="flex w-full flex-1 flex-col items-center justify-center text-center">
         {messages.length === 0 && (
           <div className="alert my-8 w-11/12 shadow-lg">
             <div>
@@ -180,7 +180,7 @@ export default function ChatGPT() {
                         </div>
                       </div>
                       <div className="chat-header">You</div>
-                      <div className="chat-bubble chat-bubble-warning text-justify">
+                      <div className="chat-bubble chat-bubble-warning p-4 text-left">
                         {message.content}
                       </div>
                     </div>
@@ -198,7 +198,7 @@ export default function ChatGPT() {
                       </div>
                       <div className="chat-header">ChatGPT</div>
                       <div
-                        className="chat-bubble chat-bubble-accent cursor-copy text-justify transition"
+                        className="chat-bubble chat-bubble-accent cursor-copy p-4 text-left transition"
                         onClick={() => {
                           navigator.clipboard.writeText(message.content)
                           toast('Answer copied to clipboard', {
@@ -219,9 +219,8 @@ export default function ChatGPT() {
             </ResizablePanel>
           ))}
         </div>
-
-        <div ref={pageEndRef}></div>
       </main>
+      <div ref={pageEndRef}></div>
     </div>
   )
 }
