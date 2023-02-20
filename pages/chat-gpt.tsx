@@ -29,7 +29,7 @@ export default function ChatGPT() {
   const pageEndRef = useRef(null)
 
   const scrollToBottom = () => {
-    pageEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+    pageEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   useEffect(() => {
@@ -124,8 +124,8 @@ export default function ChatGPT() {
             generate(e)
           }
         }}
-        rows={4}
-        className="textarea-bordered textarea fixed bottom-1 left-1/2 z-50 my-5 w-11/12 -translate-x-1/2 border-2 text-lg shadow-xl md:w-1/2"
+        rows={2}
+        className="textarea-bordered textarea fixed bottom-1 left-1/2 z-50 my-5 w-11/12 -translate-x-1/2 border-2 p-3 text-lg shadow-xl md:w-1/2"
         placeholder={'Make your prompt here\ne.g. How to be a programmer?'}
         disabled={loading}
       />
